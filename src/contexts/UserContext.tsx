@@ -8,6 +8,10 @@ export interface User {
   phone: string;
   cedulaType: string;
   cedula: string;
+  dateOfBirth?: string;
+  city?: string;
+  isVerified?: boolean;
+  isOwner?: boolean;
   idDocumentUrl?: string;
   profilePhotoUrl?: string;
 }

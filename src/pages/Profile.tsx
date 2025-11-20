@@ -12,6 +12,7 @@ import Footer from "@/components/Footer";
 import { useUser } from "@/contexts/UserContext";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { KYCDialog } from "@/components/KYCDialog";
 interface Property {
   id: string;
   title: string;
@@ -39,6 +40,7 @@ const Profile = () => {
     isAuthenticated
   } = useUser();
   const [showPropertyForm, setShowPropertyForm] = useState(false);
+  const [showKYCForm, setShowKYCForm] = useState(false);
   const [myProperties, setMyProperties] = useState<Property[]>([]);
   const [propertyForm, setPropertyForm] = useState({
     title: "",
@@ -230,10 +232,25 @@ const Profile = () => {
                   <input id="profilePhoto" type="file" accept="image/*" onChange={handleProfilePhotoChange} className="hidden" />
                 </label>
               </div>
-              <div>
+              <div className="flex-1">
                 <h2 className="text-2xl font-bold">{user?.name}</h2>
                 <p className="text-muted-foreground text-sm md:text-base break-all">{user?.email}</p>
+                <div className="mt-2 flex items-center gap-2">
+                  <span className="text-sm font-medium">Estado:</span>
+                  <span className={`text-sm px-2 py-1 rounded ${user?.isVerified ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`}>
+                    {user?.isVerified ? 'Verificado' : 'No verificado'}
+                  </span>
+                </div>
               </div>
+              {!user?.isVerified && (
+                <Button 
+                  onClick={() => setShowKYCForm(true)} 
+                  variant="outline"
+                  size="sm"
+                >
+                  Verificar datos
+                </Button>
+              )}
             </div>
           </CardContent>
         </Card>
@@ -267,18 +284,33 @@ const Profile = () => {
                 <Label>Cédula de identidad</Label>
                 <Input value={`${user?.cedulaType || ''}-${user?.cedula || ''}`} disabled />
               </div>
+
+              {user?.dateOfBirth && (
+                <div className="space-y-2">
+                  <Label>Fecha de nacimiento</Label>
+                  <Input value={user.dateOfBirth} disabled />
+                </div>
+              )}
+
+              {user?.city && (
+                <div className="space-y-2">
+                  <Label>Ciudad natal</Label>
+                  <Input value={user.city} disabled />
+                </div>
+              )}
             </div>
 
-            {/* Become Owner Button */}
-            {myProperties.length === 0 && (
+            {/* Become Owner Button or Register Property */}
+            {!user?.isOwner && myProperties.length === 0 && (
               <div className="pt-4 border-t">
-                <Dialog open={showPropertyForm} onOpenChange={setShowPropertyForm}>
-                  <DialogTrigger asChild>
-                    <Button className="w-full" size="lg">
-                      <Plus className="w-5 h-5 mr-2" />
-                      Conviértete en propietario
-                    </Button>
-                  </DialogTrigger>
+                {user?.isVerified ? (
+                  <Dialog open={showPropertyForm} onOpenChange={setShowPropertyForm}>
+                    <DialogTrigger asChild>
+                      <Button className="w-full" size="lg">
+                        <Plus className="w-5 h-5 mr-2" />
+                        Registrar propiedad
+                      </Button>
+                    </DialogTrigger>
                   <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
                     <DialogHeader>
                       <DialogTitle>Registrar nueva propiedad</DialogTitle>
@@ -425,6 +457,16 @@ const Profile = () => {
                     </form>
                   </DialogContent>
                 </Dialog>
+                ) : (
+                  <Button 
+                    onClick={() => setShowKYCForm(true)} 
+                    className="w-full" 
+                    size="lg"
+                  >
+                    <Plus className="w-5 h-5 mr-2" />
+                    Conviértete en propietario
+                  </Button>
+                )}
               </div>
             )}
           </CardContent>
@@ -622,6 +664,8 @@ const Profile = () => {
           </CardContent>
         </Card>
       </div>
+
+      <KYCDialog open={showKYCForm} onOpenChange={setShowKYCForm} />
 
       <Footer />
     </div>;
