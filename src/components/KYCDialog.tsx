@@ -4,9 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { useUser } from "@/contexts/UserContext";
+import { Upload } from "lucide-react";
 
 interface KYCDialogProps {
   open: boolean;
@@ -16,22 +16,33 @@ interface KYCDialogProps {
 export const KYCDialog = ({ open, onOpenChange }: KYCDialogProps) => {
   const { toast } = useToast();
   const { user } = useUser();
-  const [kycForm, setKycForm] = useState({
-    occupation: "",
-    monthlyIncome: "",
-    propertyPurpose: "",
-    additionalInfo: ""
-  });
+  const [idDocument, setIdDocument] = useState<File | null>(null);
+  const [selfie, setSelfie] = useState<File | null>(null);
+  const [additionalInfo, setAdditionalInfo] = useState("");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setKycForm({
-      ...kycForm,
-      [e.target.name]: e.target.value
-    });
+  const handleIdDocumentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setIdDocument(e.target.files[0]);
+    }
+  };
+
+  const handleSelfieChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setSelfie(e.target.files[0]);
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!idDocument || !selfie) {
+      toast({
+        title: "Error",
+        description: "Debes subir tanto el documento de identidad como la selfie",
+        variant: "destructive"
+      });
+      return;
+    }
 
     // Update user verification status
     const users = JSON.parse(localStorage.getItem('users') || '[]');
@@ -64,52 +75,43 @@ export const KYCDialog = ({ open, onOpenChange }: KYCDialogProps) => {
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="occupation">Ocupación</Label>
-            <Input
-              id="occupation"
-              name="occupation"
-              placeholder="Ej: Ingeniero, Profesor, Empresario"
-              value={kycForm.occupation}
-              onChange={handleChange}
-              required
-            />
+            <Label htmlFor="idDocument">Documento de identidad</Label>
+            <div className="flex items-center gap-2">
+              <Input
+                id="idDocument"
+                type="file"
+                accept="image/*"
+                onChange={handleIdDocumentChange}
+                className="cursor-pointer"
+                required
+              />
+              <Upload className="w-5 h-5 text-muted-foreground" />
+            </div>
+            {idDocument && (
+              <p className="text-sm text-muted-foreground">
+                Archivo seleccionado: {idDocument.name}
+              </p>
+            )}
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="monthlyIncome">Ingreso mensual aproximado ($)</Label>
-            <Select
-              value={kycForm.monthlyIncome}
-              onValueChange={(value) => setKycForm({ ...kycForm, monthlyIncome: value })}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Seleccione un rango" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="0-500">$0 - $500</SelectItem>
-                <SelectItem value="500-1000">$500 - $1,000</SelectItem>
-                <SelectItem value="1000-2000">$1,000 - $2,000</SelectItem>
-                <SelectItem value="2000-5000">$2,000 - $5,000</SelectItem>
-                <SelectItem value="5000+">$5,000+</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="propertyPurpose">Propósito de la propiedad</Label>
-            <Select
-              value={kycForm.propertyPurpose}
-              onValueChange={(value) => setKycForm({ ...kycForm, propertyPurpose: value })}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Seleccione una opción" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="rent">Alquilar a largo plazo</SelectItem>
-                <SelectItem value="shortTerm">Alquilar a corto plazo</SelectItem>
-                <SelectItem value="investment">Inversión</SelectItem>
-                <SelectItem value="both">Ambos</SelectItem>
-              </SelectContent>
-            </Select>
+            <Label htmlFor="selfie">Selfie</Label>
+            <div className="flex items-center gap-2">
+              <Input
+                id="selfie"
+                type="file"
+                accept="image/*"
+                onChange={handleSelfieChange}
+                className="cursor-pointer"
+                required
+              />
+              <Upload className="w-5 h-5 text-muted-foreground" />
+            </div>
+            {selfie && (
+              <p className="text-sm text-muted-foreground">
+                Archivo seleccionado: {selfie.name}
+              </p>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -117,9 +119,9 @@ export const KYCDialog = ({ open, onOpenChange }: KYCDialogProps) => {
             <Textarea
               id="additionalInfo"
               name="additionalInfo"
-              placeholder="Cuéntenos sobre su experiencia como propietario o cualquier información relevante..."
-              value={kycForm.additionalInfo}
-              onChange={handleChange}
+              placeholder="Cuéntenos cualquier información relevante..."
+              value={additionalInfo}
+              onChange={(e) => setAdditionalInfo(e.target.value)}
               rows={4}
             />
           </div>
