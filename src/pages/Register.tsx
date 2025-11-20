@@ -21,6 +21,8 @@ const Register = () => {
     phone: "",
     cedulaType: "V",
     cedula: "",
+    dateOfBirth: "",
+    city: "",
     password: "",
     confirmPassword: ""
   });
@@ -198,6 +200,31 @@ const Register = () => {
                       className="flex-1"
                     />
                   </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="dateOfBirth">Fecha de nacimiento</Label>
+                  <Input
+                    id="dateOfBirth"
+                    name="dateOfBirth"
+                    type="date"
+                    value={formData.dateOfBirth}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="city">Ciudad natal</Label>
+                  <Input
+                    id="city"
+                    name="city"
+                    type="text"
+                    placeholder="Caracas"
+                    value={formData.city}
+                    onChange={handleChange}
+                    required
+                  />
                 </div>
 
                 <div className="space-y-2">
