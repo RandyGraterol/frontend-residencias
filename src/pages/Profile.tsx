@@ -245,8 +245,8 @@ const Profile = () => {
               {!user?.isVerified && (
                 <Button 
                   onClick={() => setShowKYCForm(true)} 
-                  variant="outline"
                   size="sm"
+                  className="bg-green-700 hover:bg-green-800 text-white"
                 >
                   Verificar datos
                 </Button>
