@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft, Upload } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import Footer from "@/components/Footer";
 import { useUser } from "@/contexts/UserContext";
 
@@ -26,7 +26,6 @@ const Register = () => {
     password: "",
     confirmPassword: ""
   });
-  const [idDocument, setIdDocument] = useState<File | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,22 +39,8 @@ const Register = () => {
       return;
     }
 
-    let idDocumentUrl = '';
-    if (idDocument) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        idDocumentUrl = reader.result as string;
-        completeRegistration(idDocumentUrl);
-      };
-      reader.readAsDataURL(idDocument);
-    } else {
-      completeRegistration('');
-    }
-  };
-
-  const completeRegistration = (idDocumentUrl: string) => {
     const { confirmPassword, ...userData } = formData;
-    const success = register({ ...userData, idDocumentUrl });
+    const success = register(userData);
 
     if (success) {
       toast({
@@ -77,12 +62,6 @@ const Register = () => {
       ...formData,
       [e.target.name]: e.target.value
     });
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setIdDocument(e.target.files[0]);
-    }
   };
 
   return (
@@ -225,25 +204,6 @@ const Register = () => {
                     onChange={handleChange}
                     required
                   />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="idDocument">Documento de identidad</Label>
-                  <div className="flex items-center gap-2">
-                    <Input
-                      id="idDocument"
-                      type="file"
-                      accept="image/*"
-                      onChange={handleFileChange}
-                      className="cursor-pointer"
-                    />
-                    <Upload className="w-5 h-5 text-muted-foreground" />
-                  </div>
-                  {idDocument && (
-                    <p className="text-sm text-muted-foreground">
-                      Archivo seleccionado: {idDocument.name}
-                    </p>
-                  )}
                 </div>
 
                 <div className="space-y-2">
