@@ -25,6 +25,7 @@ const Properties = () => {
       type: "Apartamento",
       furnished: true,
       priceValue: 250,
+      listingType: "Alquiler",
     },
     {
       id: "2",
@@ -36,6 +37,7 @@ const Properties = () => {
       type: "Casa",
       furnished: false,
       priceValue: 400,
+      listingType: "Alquiler",
     },
     {
       id: "3",
@@ -47,6 +49,7 @@ const Properties = () => {
       type: "Cuarto",
       furnished: true,
       priceValue: 120,
+      listingType: "Alquiler",
     },
     {
       id: "4",
@@ -58,6 +61,7 @@ const Properties = () => {
       type: "Apartamento",
       furnished: true,
       priceValue: 350,
+      listingType: "Venta",
     },
     {
       id: "5",
@@ -69,6 +73,7 @@ const Properties = () => {
       type: "Casa",
       furnished: false,
       priceValue: 500,
+      listingType: "Venta",
     },
     {
       id: "6",
@@ -80,13 +85,14 @@ const Properties = () => {
       type: "Cuarto",
       furnished: false,
       priceValue: 80,
+      listingType: "Alquiler",
     },
   ];
 
   const filteredProperties = allProperties.filter((property) => {
     if (!filters) return true;
 
-    const { priceRange, propertyType, bedrooms, furnished } = filters;
+    const { priceRange, propertyType, bedrooms, furnished, listingType } = filters;
 
     // Price filter
     if (priceRange && (property.priceValue < priceRange[0] || property.priceValue > priceRange[1])) {
@@ -107,6 +113,11 @@ const Properties = () => {
 
     // Furnished filter
     if (furnished !== null && property.furnished !== furnished) {
+      return false;
+    }
+
+    // Listing type filter
+    if (listingType && listingType !== "all" && property.listingType !== listingType) {
       return false;
     }
 
@@ -167,6 +178,7 @@ const Properties = () => {
                     price={property.price}
                     bedrooms={property.bedrooms}
                     type={property.type}
+                    listingType={property.listingType}
                   />
                   {/* Ad section every 15 properties */}
                   {(index + 1) % 15 === 0 && index !== filteredProperties.length - 1 && (

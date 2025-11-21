@@ -12,9 +12,10 @@ interface PropertyCardProps {
   bedrooms?: number;
   type: string;
   authorName?: string;
+  listingType?: string;
 }
 
-const PropertyCard = ({ id, image, title, description, price, bedrooms, type, authorName }: PropertyCardProps) => {
+const PropertyCard = ({ id, image, title, description, price, bedrooms, type, authorName, listingType }: PropertyCardProps) => {
   const navigate = useNavigate();
 
   return (
@@ -35,6 +36,12 @@ const PropertyCard = ({ id, image, title, description, price, bedrooms, type, au
               <span>•</span>
               <BedDouble className="w-4 h-4" />
               <span>{bedrooms} habitaciones</span>
+            </>
+          )}
+          {listingType && (
+            <>
+              <span>•</span>
+              <span className="font-medium text-primary">{listingType}</span>
             </>
           )}
         </div>
@@ -62,7 +69,7 @@ const PropertyCard = ({ id, image, title, description, price, bedrooms, type, au
         <p className="text-muted-foreground mb-4">{description}</p>
         <div className="flex items-center justify-between">
           <div className="text-2xl font-bold text-primary">
-            {price} <span className="text-sm font-normal text-muted-foreground">/mes</span>
+            {price} <span className="text-sm font-normal text-muted-foreground">{listingType === "Venta" ? "" : "/mes"}</span>
           </div>
           <Button 
             size="sm" 
