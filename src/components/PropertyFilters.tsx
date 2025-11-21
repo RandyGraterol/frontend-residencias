@@ -13,10 +13,11 @@ const PropertyFilters = ({ onFiltersChange }: PropertyFiltersProps) => {
   const [propertyType, setPropertyType] = useState<string>("all");
   const [bedrooms, setBedrooms] = useState<string>("all");
   const [furnished, setFurnished] = useState<boolean | null>(null);
+  const [listingType, setListingType] = useState<string>("all");
 
   const handlePriceChange = (value: number[]) => {
     setPriceRange(value);
-    onFiltersChange?.({ priceRange: value, propertyType, bedrooms, furnished });
+    onFiltersChange?.({ priceRange: value, propertyType, bedrooms, furnished, listingType });
   };
 
   const handlePropertyTypeChange = (value: string) => {
@@ -24,24 +25,44 @@ const PropertyFilters = ({ onFiltersChange }: PropertyFiltersProps) => {
     // Reset bedrooms if Cuarto is selected
     const newBedrooms = value === "Cuarto" ? "all" : bedrooms;
     setBedrooms(newBedrooms);
-    onFiltersChange?.({ priceRange, propertyType: value, bedrooms: newBedrooms, furnished });
+    onFiltersChange?.({ priceRange, propertyType: value, bedrooms: newBedrooms, furnished, listingType });
   };
 
   const handleBedroomsChange = (value: string) => {
     setBedrooms(value);
-    onFiltersChange?.({ priceRange, propertyType, bedrooms: value, furnished });
+    onFiltersChange?.({ priceRange, propertyType, bedrooms: value, furnished, listingType });
   };
 
   const handleFurnishedChange = (checked: boolean) => {
     const newValue = checked ? true : null;
     setFurnished(newValue);
-    onFiltersChange?.({ priceRange, propertyType, bedrooms, furnished: newValue });
+    onFiltersChange?.({ priceRange, propertyType, bedrooms, furnished: newValue, listingType });
+  };
+
+  const handleListingTypeChange = (value: string) => {
+    setListingType(value);
+    onFiltersChange?.({ priceRange, propertyType, bedrooms, furnished, listingType: value });
   };
 
   return (
     <div className="bg-card border border-border rounded-lg p-6 space-y-6">
       <h3 className="text-lg font-semibold">Filtros de búsqueda</h3>
       
+      {/* Listing Type */}
+      <div className="space-y-3">
+        <Label htmlFor="listingType" className="text-base">Tipo de operación</Label>
+        <Select value={listingType} onValueChange={handleListingTypeChange}>
+          <SelectTrigger id="listingType">
+            <SelectValue placeholder="Seleccionar" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">Todos</SelectItem>
+            <SelectItem value="Alquiler">Alquiler</SelectItem>
+            <SelectItem value="Venta">Venta</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
       {/* Price Range */}
       <div className="space-y-3">
         <Label className="text-base">Rango de precio ($/mes)</Label>
