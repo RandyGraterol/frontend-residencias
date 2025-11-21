@@ -20,7 +20,7 @@ const Properties = () => {
       image: apartment1,
       title: "Apartamento Moderno Centro",
       description: "Espacioso apartamento con excelente ubicación cerca de todos los servicios",
-      price: "Bs. 250",
+      price: "$250",
       bedrooms: 2,
       type: "Apartamento",
       furnished: true,
@@ -31,7 +31,7 @@ const Properties = () => {
       image: house1,
       title: "Casa con Jardín",
       description: "Hermosa casa familiar con amplio jardín y estacionamiento",
-      price: "Bs. 400",
+      price: "$400",
       bedrooms: 3,
       type: "Casa",
       furnished: false,
@@ -42,7 +42,7 @@ const Properties = () => {
       image: room1,
       title: "Habitación Amueblada",
       description: "Cómoda habitación totalmente amueblada, ideal para estudiantes",
-      price: "Bs. 120",
+      price: "$120",
       bedrooms: 1,
       type: "Cuarto",
       furnished: true,
@@ -53,7 +53,7 @@ const Properties = () => {
       image: apartment1,
       title: "Apartamento Vista Ciudad",
       description: "Moderno apartamento en piso alto con vista panorámica",
-      price: "Bs. 350",
+      price: "$350",
       bedrooms: 2,
       type: "Apartamento",
       furnished: true,
@@ -64,7 +64,7 @@ const Properties = () => {
       image: house1,
       title: "Casa Amplia Residencial",
       description: "Casa espaciosa en zona residencial tranquila",
-      price: "Bs. 500",
+      price: "$500",
       bedrooms: 4,
       type: "Casa",
       furnished: false,
@@ -75,7 +75,7 @@ const Properties = () => {
       image: room1,
       title: "Habitación Económica",
       description: "Habitación sencilla en zona céntrica",
-      price: "Bs. 80",
+      price: "$80",
       bedrooms: 1,
       type: "Cuarto",
       furnished: false,
@@ -155,7 +155,7 @@ const Properties = () => {
               </h2>
             </div>
             
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
               {filteredProperties.slice(0, 50).map((property, index) => (
                 <>
                   <PropertyCard 
@@ -170,7 +170,7 @@ const Properties = () => {
                   />
                   {/* Ad section every 15 properties */}
                   {(index + 1) % 15 === 0 && index !== filteredProperties.length - 1 && (
-                    <div className="md:col-span-2 bg-card border border-border rounded-lg p-8 text-center">
+                    <div className="md:col-span-2 xl:col-span-3 bg-card border border-border rounded-lg p-8 text-center">
                       <p className="text-sm text-muted-foreground font-medium">Espacio publicitario</p>
                       <p className="text-xs text-muted-foreground/60 mt-2">Anuncio</p>
                     </div>
