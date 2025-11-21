@@ -112,7 +112,7 @@ const Properties = () => {
     }
 
     // Furnished filter
-    if (furnished !== null && property.furnished !== furnished) {
+    if (furnished && !property.furnished) {
       return false;
     }
 
