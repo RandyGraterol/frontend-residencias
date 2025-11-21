@@ -132,7 +132,7 @@ const Properties = () => {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-12">
+      <div className="max-w-[1600px] mx-auto px-4 py-12">
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Filters Sidebar - Sticky */}
           <div className="lg:col-span-1">
