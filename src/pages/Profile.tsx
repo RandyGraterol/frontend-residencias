@@ -9,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import { ArrowLeft, LogOut, Upload, Home, Camera, Plus, Trash2 } from "lucide-react";
 import Footer from "@/components/Footer";
-import { useUser } from "@/contexts/UserContext";
+import { useAuth } from "@/contexts/AuthContext";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { KYCDialog } from "@/components/KYCDialog";
@@ -38,7 +38,7 @@ const Profile = () => {
     user,
     logout,
     isAuthenticated
-  } = useUser();
+  } = useAuth();
   const [showPropertyForm, setShowPropertyForm] = useState(false);
   const [showKYCForm, setShowKYCForm] = useState(false);
   const [myProperties, setMyProperties] = useState<Property[]>([]);

@@ -168,9 +168,8 @@ const Properties = () => {
             
             <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
               {filteredProperties.slice(0, 50).map((property, index) => (
-                <>
+                <div key={property.id}>
                   <PropertyCard 
-                    key={property.id} 
                     id={property.id}
                     image={property.image}
                     title={property.title}
@@ -182,12 +181,12 @@ const Properties = () => {
                   />
                   {/* Ad section every 15 properties */}
                   {(index + 1) % 15 === 0 && index !== filteredProperties.length - 1 && (
-                    <div className="md:col-span-2 xl:col-span-3 bg-card border border-border rounded-lg p-8 text-center">
+                    <div className="md:col-span-2 xl:col-span-3 bg-card border border-border rounded-lg p-8 text-center mt-6">
                       <p className="text-sm text-muted-foreground font-medium">Espacio publicitario</p>
                       <p className="text-xs text-muted-foreground/60 mt-2">Anuncio</p>
                     </div>
                   )}
-                </>
+                </div>
               ))}
             </div>
 

@@ -134,9 +134,13 @@ const PropertyFilters = ({ onFiltersChange }: PropertyFiltersProps) => {
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">Todos</SelectItem>
-            <SelectItem value="Casa">Casa</SelectItem>
+            <SelectItem value="Residencia">Residencia</SelectItem>
             <SelectItem value="Apartamento">Apartamento</SelectItem>
+            <SelectItem value="Casa">Casa</SelectItem>
             <SelectItem value="Cuarto">Cuarto</SelectItem>
+            <SelectItem value="Finca">Finca</SelectItem>
+            <SelectItem value="Local">Local</SelectItem>
+            <SelectItem value="Terreno">Terreno</SelectItem>
           </SelectContent>
         </Select>
       </div>

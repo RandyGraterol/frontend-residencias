@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import PropertyCard from "@/components/PropertyCard";
 import Footer from "@/components/Footer";
 import ProfileIcon from "@/components/ProfileIcon";
-import { mockProperties } from "./PropertyDetail";
+import { mockProperties } from "@/data/mockProperties";
 
 const PublicProfile = () => {
   const { userId } = useParams();
@@ -55,17 +55,21 @@ const PublicProfile = () => {
 
         {userProperties.length > 0 ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {userProperties.map(property => (
+            {userProperties.map((property, index) => (
               <PropertyCard
                 key={property.id}
                 id={property.id}
-                image={property.image}
+                image={property.images[0]}
                 title={property.title}
                 description={property.description}
                 price={property.price}
                 bedrooms={property.bedrooms}
+                bathrooms={property.bathrooms}
+                area={property.area}
                 type={property.type}
-                authorName={property.authorName}
+                location={property.location}
+                listingType={property.listingType}
+                index={index}
               />
             ))}
           </div>

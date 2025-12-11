@@ -6,7 +6,7 @@ const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-3 gap-8">
           <div>
-            <h3 className="text-xl font-bold mb-4">Alquileres SJM</h3>
+            <h3 className="text-xl font-bold mb-4">Habitas</h3>
             <p className="text-primary-foreground/80">
               Tu mejor opción para encontrar el hogar perfecto en San Juan de los Morros
             </p>
@@ -21,7 +21,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="w-4 h-4" />
-                <span>info@alquileressjm.com</span>
+                <span>info@habitas.com</span>
               </div>
               <div className="flex items-center gap-2">
                 <MapPin className="w-4 h-4" />
@@ -41,7 +41,7 @@ const Footer = () => {
         </div>
         
         <div className="border-t border-primary-foreground/20 mt-8 pt-8 text-center text-primary-foreground/60">
-          <p>&copy; 2024 Alquileres SJM. Todos los derechos reservados.</p>
+          <p>&copy; 2024 Habitas. Todos los derechos reservados.</p>
         </div>
       </div>
     </footer>
